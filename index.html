@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+  <head>
+    <title>overf.low v0.1.42-PRE#35d57db</title>
+    <script>
+      const BASE = 0b10000,
+        CELL = 0b1100101;
+    </script>
+    <style>
+      :root {
+        --sz: 3.333rem;
+        --w: #e1e1e1;
+        --b: #1e1e1e;
+        --g: #191;
+        --y: #199;
+        --r: #911;
+        --f: 'Courier New', Courier, monospace;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: calc(var(--sz) / 2);
+        font-size: var(--sz);
+        font-family: var(--f);
+        color: var(--w);
+        background-color: var(--b);
+      }
+      time {
+        padding: 0 calc(var(--sz) / 2);
+        opacity: 0.1;
+        transition: opacity 0s;
+        text-align: center;
+        cursor: cell;
+      }
+      .l time {
+        opacity: 0.666;
+      }
+      #h {
+        padding: 0 calc(var(--sz) / 2);
+        color: var(--w);
+        opacity: 0.1;
+        text-wrap: auto;
+        font-size: var(--sz);
+        font-family: var(--f);
+        text-align: center;
+        pointer-events: none;
+        user-select: none;
+      }
+      #y {
+        color: var(--g);
+        transition-delay: 2s;
+      }
+      #d {
+        color: var(--y);
+        transition-delay: 0s;
+      }
+      #t {
+        color: var(--r);
+        transition-delay: 2.3s;
+      }
+      ::selection {
+        background-color: var(--w);
+        color: var(--b);
+      }
+    </style>
+  </head>
+  <body>
+    <pre id="h">Z.gE</pre>
+    <time id="y" datetime="2000-01-01T00:00:00">O</time>
+    <time id="d" datetime="P28DT6H42M12S">ver</time>
+    <time id="t" datetime="2038-01-19T03:14:07">flow</time>
+    <script>
+      let T = Temporal;
+      let N = T.Now.plainDateTimeISO;
+      let O = { smallestUnit: 'second' };
+      let DT = 'datetime';
+      let [$h, $d, $y, $t] = ['h', 'd', 'y', 't'].map(($) =>
+        document.querySelector(`#${$}`),
+      );
+      let d = T.Duration.from($d.getAttribute(DT));
+      let y = T.PlainDateTime.from($y.getAttribute(DT));
+      let t = T.PlainDateTime.from($t.getAttribute(DT));
+      let F = (s) =>
+        s
+          .split('')
+          .map((c) => c.charCodeAt(0).toString(BASE))
+          .join(' ')
+          .padStart(CELL, '00 ')
+          .toUpperCase();
+      let _n = () => {
+        d = d.subtract({ seconds: 1 });
+        let _d = d.toString(O);
+        $d.innerText = F(_d);
+        $d.title = _d;
+        let _y = N().since(y).toString(O);
+        $y.innerText = F(_y);
+        $y.title = _y;
+        let _t = N().until(t).toString(O);
+        $t.innerText = F(_t);
+        $t.title = _t;
+      };
+      setInterval(_n, 1e3) && _n();
+      setTimeout(() => {
+        document.body.classList.add('l');
+      }, 10);
+      $h.innerText = new Array(Math.ceil(CELL / 3))
+        .fill(0)
+        .map((x, i) => i.toString(BASE).padStart(2, '0'))
+        .join(' ')
+        .toUpperCase();
+    </script>
+  </body>
+</html>
