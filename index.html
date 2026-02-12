@@ -86,8 +86,11 @@
         document.querySelector(`#${$}`),
       );
       let d = T.Duration.from($d.getAttribute(DT));
+      $d.removeAttribute(DT);
       let y = T.PlainDateTime.from($y.getAttribute(DT));
+      $y.removeAttribute(DT);
       let t = T.PlainDateTime.from($t.getAttribute(DT));
+      $t.removeAttribute(DT);
       let F = (s) =>
         s
           .split('')
